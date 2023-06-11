@@ -22,7 +22,7 @@
 <body>
 
   <main>
-    
+
     <header>
       <div id="header">
         <h1><a href="index.html">BrainBytes</a></h1>
@@ -35,7 +35,7 @@
 
     </header>
 
-    <section>
+    <section class="input-container">
       <form action="/" method="POST">
         <div>
           <label for="front">Front:</label>
@@ -52,7 +52,16 @@
     </section>
     <br>
 
+    <section class="flashcards-container hidden">
+      <ul id="card-list"></ul>
+    </section>
+
+    <section class="set">
+      <button id="openSet">Open Set</button>
+    </section>
+
   </main>
 
+  <script src="script.js"></script>
 </body>
 </html>
