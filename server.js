@@ -6,7 +6,7 @@ const path = require("path");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect("mongodb+srv://dkwagner40:Lmbas123@cluster0.pfvqylq.mongodb.net/flashcards", {
+mongoose.connect("mongodb+srv://<username>:<password>@<wow>.pfvqylq.mongodb.net/flashcards", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
