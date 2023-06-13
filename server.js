@@ -6,16 +6,16 @@ const path = require("path");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect("mongodb+srv://<username>:<password>@<wow>.pfvqylq.mongodb.net/flashcards", {
+mongoose.connect("mongodb+srv://<username>:<password>@<database>.pfvqylq.mongodb.net/<collection>", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 // Create a data schema
-const notesSchema = {
-  title: String,
-  content: String,
-};
+const notesSchema = new mongoose.Schema({
+  front: String,
+  back: String,
+});
 
 const Note = mongoose.model("Note", notesSchema);
 
@@ -38,14 +38,21 @@ app.get("/js/script.js", function (req, res) {
   res.sendFile(path.join(__dirname, "public", "script.js"));
 });
 
-//app.post
+// app.post
 app.post("/", function (req, res) {
-  let newNote = new Note({
-    title: req.body.title,
-    content: req.body.content,
+  const newNote = new Note({
+    front: req.body.front,
+    back: req.body.back,
   });
-  newNote.save();
-  res.redirect("/");
+
+  newNote.save(function (err) {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Error creating note");
+    } else {
+      res.redirect("/");
+    }
+  });
 });
 
 app.listen(3000, function () {
