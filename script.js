@@ -1,46 +1,40 @@
-document.getElementById("openSet").addEventListener("click", function() {
-  document.querySelector(".input-container").classList.add("hidden");
-  document.querySelector(".flashcard-container").classList.remove("hidden");
-});
+/*document.addEventListener("DOMContentLoaded", function () {
+  const flashcardForm = document.getElementById("flashcard-form");
+  const frontTextArea = document.getElementById("front");
+  const backTextArea = document.getElementById("back");
 
-const cardList = document.getElementById('card-list');
-const openSetButton = document.getElementById('openSet');
-const inputContainer = document.querySelector('.input-container');
-const flashcardContainer = document.querySelector('.flashcards-container');
+  flashcardForm.addEventListener("submit", function (event) {
+    event.preventDefault();
 
-function fetchAndDisplayFlashcards() {
-  fetch('/notes')
-    .then((response) => response.json())
-    .then((cards) => {
-      cardList.innerHTML = '';
-      cards.forEach(function(card) {
-        const newCard = document.createElement('li');
-        newCard.innerHTML = `
-          <div class="card">
-            <div class="front">
-              <h3>${card.front}</h3>
-            </div>
-            <div class="back">
-              <h3>${card.back}</h3>
-            </div>
-          </div>
-        `;
-        cardList.appendChild(newCard);
-        newCard.addEventListener('click', function() {
-          newCard.classList.toggle('flipped');
-        });
-      });
+    const frontText = frontTextArea.value;
+    const backText = backTextArea.value;
 
-      inputContainer.classList.add('hidden');
-      flashcardContainer.classList.remove('hidden');
-    })
-    .catch((error) => {
-      console.log("Error fetching flashcards:", error);
+    // Call a function to create flashcard elements on the page
+    createFlashcard(frontText, backText);
+
+    // Clear the input fields
+    frontTextArea.value = "";
+    backTextArea.value = "";
+
+    // Submit the form programmatically
+    flashcardForm.submit();
+  });
+
+  function createFlashcard(front, back) {
+    const cardList = document.getElementById("card-list");
+    const newCard = document.createElement("li");
+    newCard.innerHTML = `
+      <div class="card">
+        <div class="front">${front}</div>
+        <div class="back">${back}</div>
+      </div>
+    `;
+    cardList.appendChild(newCard);
+
+    newCard.addEventListener("click", function () {
+      newCard.classList.toggle("flipped");
     });
-}
-
-openSetButton.addEventListener('click', function() {
-  fetchAndDisplayFlashcards();
+  }
 });
 
-// Still Not working //
+*/
