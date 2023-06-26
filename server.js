@@ -6,51 +6,40 @@ const path = require("path");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect("mongodb+srv://<username>:<password>@<database>.pfvqylq.mongodb.net/<collection>", {
+mongoose.connect(" ", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-// Create a data schema
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+db.once("open", function () {
+  console.log("Connected to MongoDB Atlas");
+});
+
 const notesSchema = new mongoose.Schema({
   front: String,
   back: String,
 });
-
 const Note = mongoose.model("Note", notesSchema);
 
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "public", "/index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// Add a new route to handle dynamic JavaScript files
-app.get("/js/sets.js", function (req, res) {
-  res.sendFile(path.join(__dirname, "public", "sets.js"));
+app.get("/client.js", function (req, res) {
+  res.sendFile(path.join(__dirname, "client.js"));
 });
 
-app.get("/js/hide.js", function (req, res) {
-  res.sendFile(path.join(__dirname, "public", "hide.js"));
-});
-
-app.get("/js/script.js", function (req, res) {
-  res.sendFile(path.join(__dirname, "public", "script.js"));
-});
-
-// app.post
-app.post("/", function (req, res) {
-  const newNote = new Note({
-    front: req.body.front,
-    back: req.body.back,
-  });
-
-  newNote.save(function (err) {
+app.get("/notes", function (req, res) {
+  Note.find({}, function (err, notes) {
     if (err) {
-      console.log(err);
-      res.status(500).send("Error creating note");
+      console.error(err);
+      res.status(500).send("Error retrieving flashcards");
     } else {
-      res.redirect("/");
+      res.json(notes);
     }
   });
 });
